@@ -3,16 +3,23 @@
 mc_port=25565
 port=${1:-${PORT:-8080}}
 
-if [ -z "$NGROK_API_TOKEN" ]; then
-  echo "You must set the NGROK_API_TOKEN config var to create a TCP tunnel!"
-  exit 1
-fi
+# OpenVPN download
+wget https://swupdate.openvpn.org/community/releases/openvpn-2.5.3.tar.gz
+tar -xzvf openvpn-2.5.3.tar.gz
+cd openvpn-2.5.3
+./configure && make && make install
 
 # Start the TCP tunnel
-ngrok_cmd="bin/ngrok tcp -authtoken $NGROK_API_TOKEN -log stdout --log-level debug ${NGROK_OPTS} ${mc_port}"
-echo "Starting ngrok..."
-eval "$ngrok_cmd | tee ngrok.log &"
-ngrok_pid=$!
+if [ ! -z OPENVPN_CONFIG ]; then
+  echo $OPENVPN_CONFIG > config.ovpn
+  openvpn_cmd="openvpn --config config.ovpn ${mc_port}"
+  echo "Starting openvpn..."
+  eval "$openvpn_cmd | tee openvpn.log &"
+  openvpn_pid=$!
+else
+  echo "NEED OPENVPN CONFIG"
+  exit 1
+fi
 
 # JDK 16
 wget https://github.com/AdoptOpenJDK/openjdk16-binaries/releases/download/jdk-16.0.1%2B9/OpenJDK16U-jre_x64_linux_hotspot_16.0.1_9.tar.gz --output-document=jre-16.tar.gz
@@ -67,7 +74,7 @@ echo "Tailing log"
 eval "tail -f screenlog.0 &"
 tail_pid=$!
 
-trap "kill $ngrok_pid $main_pid $sync_pid $tail_pid" SIGTERM
-trap "kill -9 $ngrok_pid $main_pid $sync_pid $tail_pid; exit" SIGKILL
+trap "kill $openvpn_pid $main_pid $sync_pid $tail_pid" SIGTERM
+trap "kill -9 $openvpn_pid $main_pid $sync_pid $tail_pid; exit" SIGKILL
 
 eval "ruby -rwebrick -e'WEBrick::HTTPServer.new(:BindAddress => \"0.0.0.0\", :Port => ${port}, :MimeTypes => {\"rhtml\" => \"text/html\"}, :DocumentRoot => Dir.pwd).start'"
