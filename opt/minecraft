@@ -20,7 +20,7 @@ mkdir jre-16
 tar -xzvf jre-16.tar.gz -C jre-16
 
 JAVA_HOME=$(pwd)/jre-16
-PATH=$JAVA_HOME/bin:$PATH
+PATH=${JAVA_HOME}/bin:${PATH}
 
 
 # Do an inline sync first, then start the background job
@@ -57,7 +57,7 @@ echo -e "online-mode=${online_mode}\n" >> /app/server.properties
 echo "Setting online mode to ${online_mode}"
 
 echo "Starting: minecraft ${mc_port}"
-eval "screen -L -h 2048 -dmS minecraft /app/java -Xmx${heap} -Xms${heap} -jar minecraft.jar nogui"
+eval "screen -L -h 2048 -dmS minecraft ${JAVA_HOME}/bin/java -Xmx${heap} -Xms${heap} -jar minecraft.jar nogui"
 main_pid=$!
 
 # Flush the logfile every second, and ensure that the logfile exists
