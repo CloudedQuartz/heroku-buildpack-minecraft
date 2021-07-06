@@ -20,15 +20,6 @@ mkdir jre-16
 tar -xzvf jre-16.tar.gz -C jre-16
 
 JAVA_HOME=$(pwd)/jre-16
-
-#DEBUG
-i=0
-while [ $i -le 50 ]
-do
-  echo $JAVA_HOME
-  i++
-done
-#END DEBUG
 PATH=$JAVA_HOME/bin:$PATH
 
 
