@@ -94,7 +94,20 @@ $ heroku config:set NGROK_OPTS="--remote-addr 1.tcp.ngrok.io:25565"
 You can choose the Minecraft version by setting the MINECRAFT_VERSION like so:
 
 ```
-$ heroku config:set MINECRAFT_VERSION="1.8.3"
+$ heroku config:set MINECRAFT_VERSION="1.17"
+```
+
+You can choose the paper build(https://papermc.io/downloads)
+
+```
+$ heroku config:set PAPER_BUILD="75"
+```
+
+You can disable online-mode to allow unauthenticated clients to join. This is
+only recommended for testing purposes
+
+```
+$ heroku config:set ONLINE_MODE="false"
 ```
 
 You can also configure the server properties by creating a `server.properties`
