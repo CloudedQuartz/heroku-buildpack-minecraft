@@ -11,6 +11,7 @@ Create a new Git project with a `eula.txt` file:
 
 ```sh-session
 $ echo 'eula=true' > eula.txt
+$ echo 'openvpn' > Aptfile
 $ git init
 $ git add eula.txt
 $ git commit -m "first commit"
@@ -24,6 +25,7 @@ $ heroku create
 $ heroku buildpacks:add heroku/python
 $ heroku buildpacks:add heroku/jvm
 $ heroku buildpacks:add jkutner/minecraft
+$ heroku buildpacks:add --index 1 https://github.com/heroku/heroku-buildpack-apt
 $ git push heroku master
 ```
 

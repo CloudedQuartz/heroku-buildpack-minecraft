@@ -10,9 +10,6 @@ tar -xzvf jre-16.tar.gz -C jre-16
 export JAVA_HOME=$(pwd)/jre-16
 export PATH=$JAVA_HOME/bin:$PATH
 
-# OVPN
-apt-get install -y openvpn
-
 # Start the TCP tunnel
 if [ ! -z OVPN_CONFIG ]; then
   openvpn_cmd="openvpn --config config.ovpn ${mc_port}"
