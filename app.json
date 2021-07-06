@@ -11,8 +11,8 @@
       "description": "Do you accept the Minecraft EULA?",
       "value": "true"
     },
-    "NGROK_API_TOKEN": {
-      "description": "Your personal ngrok API token",
+    "OPENVPN_CONFIG": {
+      "description": "Your openvpn config",
       "required": true
     },
     "AWS_BUCKET": {

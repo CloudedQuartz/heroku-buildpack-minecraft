@@ -7,7 +7,7 @@ for running a Minecraft server in a [dyno](https://devcenter.heroku.com/articles
 
 ## Usage
 
-Create a [free ngrok account](https://ngrok.com/) and copy your Auth token. Then create a new Git project with a `eula.txt` file:
+Create a new Git project with a `eula.txt` file:
 
 ```sh-session
 $ echo 'eula=true' > eula.txt
@@ -17,14 +17,13 @@ $ git commit -m "first commit"
 ```
 
 Then, install the [Heroku toolbelt](https://toolbelt.heroku.com/).
-Create a Heroku app, set your ngrok token, and push:
+Create a Heroku app and push:
 
 ```sh-session
 $ heroku create
 $ heroku buildpacks:add heroku/python
 $ heroku buildpacks:add heroku/jvm
 $ heroku buildpacks:add jkutner/minecraft
-$ heroku config:set NGROK_API_TOKEN="xxxxx"
 $ git push heroku master
 ```
 
@@ -33,16 +32,6 @@ Finally, open the app:
 ```sh-session
 $ heroku open
 ```
-
-This will display the ngrok logs, which will contain the name of the server
-(really it's a proxy, but whatever):
-
-```
-Server available at: 0.tcp.ngrok.io:17003
-```
-
-Copy the `0.tcp.ngrok.io:17003` part, and paste it into your local Minecraft app
-as the server name.
 
 ## Syncing to S3
 
@@ -80,14 +69,6 @@ $ screen -r minecraft
 (If you hit `Ctrl-C` while in the session, you'll terminate the Minecraft server.)
 
 ## Customizing
-
-### ngrok
-
-You can customize ngrok by setting the `NGROK_OPTS` config variable. For example:
-
-```
-$ heroku config:set NGROK_OPTS="--remote-addr 1.tcp.ngrok.io:25565"
-```
 
 ### Minecraft
 
