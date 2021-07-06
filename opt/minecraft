@@ -17,9 +17,9 @@ ngrok_pid=$!
 # JDK 16
 wget https://github.com/AdoptOpenJDK/openjdk16-binaries/releases/download/jdk-16.0.1%2B9/OpenJDK16U-jre_x64_linux_hotspot_16.0.1_9.tar.gz --output-document=jre-16.tar.gz
 mkdir jre-16
-tar -xzvf jre-16.tar.gz -C jre-16
+tar -xzvf jre-16.tar.gz
 
-JAVA_HOME=$(pwd)/jre-16
+JAVA_HOME=$(pwd)/jdk-16.0.1+9-jre
 PATH=${JAVA_HOME}/bin:${PATH}
 
 
@@ -57,7 +57,7 @@ echo -e "online-mode=${online_mode}\n" >> /app/server.properties
 echo "Setting online mode to ${online_mode}"
 
 echo "Starting: minecraft ${mc_port}"
-eval "screen -L -h 2048 -dmS minecraft ${JAVA_HOME}/bin/java -Xmx${heap} -Xms${heap} -jar minecraft.jar nogui"
+eval "screen -L -h 2048 -dmS minecraft java -Xmx${heap} -Xms${heap} -jar minecraft.jar nogui"
 main_pid=$!
 
 # Flush the logfile every second, and ensure that the logfile exists
