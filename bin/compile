@@ -35,7 +35,7 @@ mkdir -p "$APT_STATE_DIR/lists/partial"
 
 echo "-----> Installing screen... "
 apt-get $APT_OPTIONS update -y | indent
-apt-get $APT_OPTIONS -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall screen | indent
+apt-get $APT_OPTIONS -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall screen openvpn| indent
 mkdir -p $BUILD_DIR/.apt/var/run/screen
 
 mkdir -p $BUILD_DIR/.profile.d
@@ -54,10 +54,6 @@ EOF
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   dpkg -x $DEB $BUILD_DIR/.apt/
 done
-
-echo -n "-----> Installing openvpn for portmap... "
-apt install -y openvpn
-echo "done"
 
 # We use paper 1.17 unless specified otherwise
 minecraft_version=${MINECRAFT_VERSION:-"1.17"}

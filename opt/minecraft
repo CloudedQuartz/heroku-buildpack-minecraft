@@ -4,7 +4,7 @@ mc_port=25566
 port=${1:-${PORT:-8080}}
 
 # Start the TCP tunnel
-if [ ! -z OVPN_CONFIG ]
+if [ ! -z OVPN_CONFIG ]; then
   openvpn_cmd="openvpn --config config.ovpn ${mc_port}"
   echo "Starting openvpn..."
   eval "$openvpn_cmd | tee openvpn.log &"
@@ -12,7 +12,7 @@ if [ ! -z OVPN_CONFIG ]
 else
   echo "NEED OPENVPN CONFIG"
   exit 1
-endif
+fi
 
 # Do an inline sync first, then start the background job
 echo "Starting sync..."
