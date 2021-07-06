@@ -41,6 +41,12 @@ case $limit in
   ;;
 esac
 
+# Online mode configration
+# Check if onlinemode is defined in heroku config varables
+online_mode=${ONLINE_MODE:-"true"}
+echo "online-mode=${online_mode}" >> /app/server.properties
+echo "Setting online mode to ${online_mode}"
+
 echo "Starting: minecraft ${mc_port}"
 eval "screen -L -h 2048 -dmS minecraft java -Xmx${heap} -Xms${heap} -jar minecraft.jar nogui"
 main_pid=$!
