@@ -18,8 +18,18 @@ ngrok_pid=$!
 wget https://github.com/AdoptOpenJDK/openjdk16-binaries/releases/download/jdk-16.0.1%2B9/OpenJDK16U-jre_x64_linux_hotspot_16.0.1_9.tar.gz --output-document=jre-16.tar.gz
 mkdir jre-16
 tar -xzvf jre-16.tar.gz -C jre-16
-export JAVA_HOME=$(pwd)/jre-16
-export PATH=$JAVA_HOME/bin:$PATH
+
+JAVA_HOME=$(pwd)/jre-16
+
+#DEBUG
+i=0
+while [ $i -le 50 ]
+do
+  echo $JAVA_HOME
+  i++
+done
+#END DEBUG
+PATH=$JAVA_HOME/bin:$PATH
 
 
 # Do an inline sync first, then start the background job
