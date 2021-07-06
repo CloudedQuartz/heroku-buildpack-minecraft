@@ -31,7 +31,7 @@ if [ "$READ_ONLY" != "true" ]; then
 fi
 
 # create server config
-echo "server-port=${mc_port}" >> /app/server.properties
+echo -e "server-port=${mc_port}\n" >> /app/server.properties
 for f in whitelist banned-players banned-ips ops; do
   test ! -f $f.json && echo -n "[]" > $f.json
 done
@@ -52,7 +52,7 @@ esac
 # Online mode configration
 # Check if onlinemode is defined in heroku config varables
 online_mode=${ONLINE_MODE:-"true"}
-echo "online-mode=${online_mode}" >> /app/server.properties
+echo -e "online-mode=${online_mode}\n" >> /app/server.properties
 echo "Setting online mode to ${online_mode}"
 
 echo "Starting: minecraft ${mc_port}"
